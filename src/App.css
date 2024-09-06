@@ -1,0 +1,28 @@
+.App{
+  text-align: center;
+  margin: 1rem 0rem;
+}
+input{
+  border: 2px solid lightseagreen;
+  padding: .2rem .5rem;
+  border-radius: 2rem;
+}
+input:focus{
+  outline: none
+}
+select{
+  border: 2px solid lightseagreen;
+  margin: .2rem;
+  padding: .2rem .5rem;
+  border-radius: 2rem;
+}
+select:focus{
+  outline: none
+}
+button{
+  border: none;
+  margin: .2rem;
+  padding: .2rem .5rem;
+  color: white;
+  background-color: lightseagreen;
+}

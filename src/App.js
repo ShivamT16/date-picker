@@ -36,14 +36,13 @@ function App() {
       })
     }
   }
-
   
   return (
     // <div  className="app" style={myStyle}>
     <div className="App" > 
     {/* <SideNavBar  toggleStyle={toggleStyle}/> */}
     {/* <BasicCalendar  className='p-4' style={myStyle} /> */}
-    {/* <RuleCalendar /> */}
+    <RuleCalendar />
     {/* <DatePick /> */}
     <RDates />
     </div>

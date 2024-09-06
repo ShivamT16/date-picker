@@ -1,11 +1,7 @@
 import { useState } from "react";
+import { MonthArray, DateArray, DaysOfWeek } from "./data"
 
 export const RDates = () => {
-
-    const MonthArray = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"]
-    const DateArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
-    const DaysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday','Weekdays', 'Weekends'];
-
     const [repeat, setRepeat] = useState({
         start: "Yearly",
         end: "Never"
@@ -34,7 +30,7 @@ export const RDates = () => {
     return(
         <div>
             <h3> Start Date </h3>
-            <input type="date" onChange={(e) => setDate({startDate: e.target.value})} />
+            <input type="date" onChange={(e) => setDate({...date,startDate: e.target.value})} />
             <br />
             <h3> Repeat </h3>
             <select onChange={(e) => setRepeat({...repeat,start: e.target.value})} >
@@ -44,20 +40,22 @@ export const RDates = () => {
             </select>
             <br />
 
-      <br /> --------------------------------------------------      
+        <br /> --------------------------------------------------      
 
       { repeat.start === "Yearly" && <div>
-            <input type="radio" name="yearly" value={"ON"} onChange={(e) => setSelection(e.target.value)} /> on
+            <input type="radio" name="yearly" value={"ON"} onChange={(e) => setSelection(e.target.value)} /> On Month:
             <select onChange={(e) => setStatus({...status, month: e.target.value})} disabled={selection === "ON" ? false : true}>
             { MonthArray.map((month) => <option>{month}</option>) }
             </select>
+            Date:
             <select onChange={(e) => setStatus({...status, date: e.target.value})} disabled={selection === "ON" ? false : true}>
             { DateArray.map((date) => <option>{date}</option> ) }
             </select> 
 
             <br />
+            <br />
             
-            <input type="radio" name="yearly" value={"ON-THE"} onChange={(e) => setSelection(e.target.value)} /> on the
+            <input type="radio" name="yearly" value={"ON-THE"} onChange={(e) => setSelection(e.target.value)} /> On the Occurence of:
             <select onChange={(e) => setStatus({...status, frequency: e.target.value})} disabled={selection === "ON" ? true : false}>
             <option>First</option>
             <option>Second</option>
@@ -65,24 +63,26 @@ export const RDates = () => {
             <option>Fourth</option>
             <option>Last</option>
             </select>
+            Day:
             <select onChange={(e) => setStatus({...status, days: e.target.value})} disabled={selection === "ON" ? true : false}>
             { DaysOfWeek.map((days)=> <option>{days}</option> ) }
             </select>
-            of
+            of Month:
             <select onChange={(e) => setStatus({...status, month: e.target.value})} disabled={selection === "ON" ? true : false}>
             { MonthArray.map((month) => <option>{month}</option> ) }
             </select>
       </div> }
 
       { repeat.start === "Monthly" && <div>
-       every <input type="text" />
+       Every <input type="text" placeholder="First, Second month...." /> month
        <br />
-       <input type="radio" name="monthly" value={"ON"} onChange={(e) => setSelection(e.target.value)} /> on day
+       
+       <input type="radio" name="monthly" value={"ON"} onChange={(e) => setSelection(e.target.value)} /> On Date:
             <select onChange={(e) => setStatus({...status, date: e.target.value})} disabled={selection === "ON" ? false : true}>
             {  DateArray.map((date) => <option>{date}</option> ) }
             </select> 
         <br />
-            <input type="radio" name="monthly" value={"ON-THE"} onChange={(e) => setSelection(e.target.value)} /> on the
+            <input type="radio" name="monthly" value={"ON-THE"} onChange={(e) => setSelection(e.target.value)} /> On the Occurence of
 
             <select onChange={(e) => setStatus({...status, frequency: e.target.value})} disabled={selection === "ON" ? true : false}>
             <option>First</option>
@@ -91,7 +91,7 @@ export const RDates = () => {
             <option>Fourth</option>
             <option>Last</option>
             </select>
-
+            Day: 
             <select onChange={(e) => setStatus({...status, days: e.target.value})} disabled={selection === "ON" ? true : false}>
             { DaysOfWeek.map((days)=> <option>{days}</option> ) }
             </select>
@@ -99,12 +99,13 @@ export const RDates = () => {
       </div> }
 
       { repeat.start === "Weekly" && <div>
-            every <input type="text" placeholder="1" /> weeks
+            Every <input type="text" placeholder="First, Second week...." /> Week
 
             <br />
-
+            <br />
+         OR Select Days:
             {
-                DaysOfWeek.map((day)=> <button style={{border: days.includes(day) ? "" : "" }} onClick={(e) => totalDays(day)} > {day} </button> )
+                DaysOfWeek.map((day)=> <button style={{backgroundColor: days.includes(day) ? "blue" : "" }} onClick={(e) => totalDays(day)} > {day} </button> )
             }
       </div> }
 
@@ -121,7 +122,13 @@ export const RDates = () => {
           <input type="text" /> Execution </> }
 
           { repeat.end === "On Date" && <>
-          <input type="date" onChange={(e) => setDate({endDate: e.target.value})} /> </> }
+          <input type="date" onChange={(e) => setDate({...date,endDate: e.target.value})} /> </> }
+
+     <br />------------------------
+     <p> {date.startDate} || {date.endDate} </p> 
+     <p> {repeat.start} {repeat.end} </p>
+     <p> {status.month} {status.days} {status.date} {status.frequency} {status.execution} </p>
+     <p> {days.join(" | ")} </p>
 
     </div>
     )
