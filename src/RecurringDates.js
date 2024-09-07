@@ -1,44 +1,25 @@
-import { useState } from "react";
-import { MonthArray, DateArray, DaysOfWeek } from "./data"
+import { useContext } from "react";
+import { MonthArray, DateArray, DaysOfWeek } from "./Data/data"
+import { DateContext } from "./Context/DateContext";
 
 export const RDates = () => {
-    const [repeat, setRepeat] = useState({
-        start: "Yearly",
-        end: "Never"
-    })
-    const [status, setStatus] = useState({
-        month: "",
-        days: "",
-        date: "",
-        frequency: "",
-        execution: "",
-    })
-    const [date, setDate] = useState({
-        startDate: "",
-        endDate: ""
-    })
-    const [days,setDays] = useState([])
-    const [selection, setSelection] = useState("ON");
-    
-    const totalDays = (selectedDays) => {
-        days.includes(selectedDays) ? 
-        setDays(days.filter((day) => day !== selectedDays)) :
-        setDays([...days,selectedDays])
-    }
-    // console.log(days)
+    const {
+        repeat,setRepeat,status,setStatus,date,setDate,days,selection,setSelection,totalDays
+    } = useContext(DateContext)
 
     return(
         <div>
             <h3> Start Date </h3>
             <input type="date" onChange={(e) => setDate({...date,startDate: e.target.value})} />
             <br />
+            
             <h3> Repeat </h3>
             <select onChange={(e) => setRepeat({...repeat,start: e.target.value})} >
                 <option>Yearly</option>
                 <option>Monthly</option>
                 <option>Weekly</option>
+                <option>Daily</option>
             </select>
-            <br />
 
         <br /> --------------------------------------------------      
 
@@ -102,8 +83,8 @@ export const RDates = () => {
             Every <input type="text" placeholder="First, Second week...." /> Week
 
             <br />
-            <br />
-         OR Select Days:
+
+         <p>Or Select Days:</p>
             {
                 DaysOfWeek.map((day)=> <button style={{backgroundColor: days.includes(day) ? "blue" : "" }} onClick={(e) => totalDays(day)} > {day} </button> )
             }
@@ -119,16 +100,19 @@ export const RDates = () => {
           </select>   
 
           { repeat.end === "After" && <>
-          <input type="text" /> Execution </> }
+          <input type="text" placeholder="Number of execution..." /> Execution </> }
 
           { repeat.end === "On Date" && <>
           <input type="date" onChange={(e) => setDate({...date,endDate: e.target.value})} /> </> }
 
-     <br />------------------------
-     <p> {date.startDate} || {date.endDate} </p> 
-     <p> {repeat.start} {repeat.end} </p>
-     <p> {status.month} {status.days} {status.date} {status.frequency} {status.execution} </p>
-     <p> {days.join(" | ")} </p>
+     <br /> --------------------------------------------------
+     
+     <div>
+     <p> Start Date- {date.startDate} | End Date- {date.endDate} </p> 
+     <p> Repeat Start- {repeat.start} | Repeat End- {repeat.end} </p>
+     <p> Month- {status.month} | Days- {status.days} | Date- {status.date} | Frequency- {status.frequency} | Execution- {status.execution} </p>
+     <p> Selected Days- {days.join(" | ")} </p>
+     </div>
 
     </div>
     )

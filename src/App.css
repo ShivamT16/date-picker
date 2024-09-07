@@ -1,6 +1,7 @@
 .App{
   text-align: center;
   margin: 1rem 0rem;
+  font-size: large;
 }
 input{
   border: 2px solid lightseagreen;
@@ -22,7 +23,8 @@ select:focus{
 button{
   border: none;
   margin: .2rem;
-  padding: .2rem .5rem;
+  padding: .4rem .6rem;
   color: white;
   background-color: lightseagreen;
+  cursor: pointer;
 }
